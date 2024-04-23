@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/estilos2.css}" />
+</head>
+<body>
+	
+	<div class="navbar">
+	    <a th:href="@{/}">Pokedex</a>
+	    <a th:href="@{/newuser}" th:if="${session['username'] == null}">Login</a>
+	    <a th:href="@{/users}">Usuario</a>
+		<a th:href="@{/logout}">Logout</a>
+
+	</div>
+
+    <div class="contenedor-pokemons">
+        <div class="card" th:each="user_with_pokemon : ${user_with_pokemon}">
+            <div class="face front">
+                <img th:src="@{'/imgs/cartas/'+ ${user_with_pokemon} + '.jpg'}" loading="lazy">									 
+            </div>
+            <div class="face back">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

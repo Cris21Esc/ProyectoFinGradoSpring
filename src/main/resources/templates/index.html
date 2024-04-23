@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/estilos.css}" />
+</head>
+<body>	
+	<div class="navbar">
+	    <a th:href="@{/}">Pokedex</a>
+	    <a th:href="@{/newuser}" th:if="${session['username'] == null}">Login</a>
+	    <a th:href="@{/users}">Usuario</a>
+		<a th:href="@{/logout}">Logout</a>
+	</div>
+	
+    <div class="contenedor-pokemons">
+        <div class="card" th:each="pokemon : ${pokemons}" th:classappend="${#lists.contains(user_with_pokemon, pokemon.num_pokedex) ? 'caught' : ''}">
+            <div class="face front">
+                <!-- Add pokename attribute to store the pokemon name -->
+                <img th:src="@{'/imgs/cartas/'+ ${pokemon.num_pokedex} + '.jpg'}" loading="lazy">
+                <div
+                     th:pokename="${pokemon.nombre}"
+                     th:pokehp="${pokemon.hp}"
+                     th:pokeatk="${pokemon.atk}"
+                     th:pokeatkesp="${pokemon.atk_esp}"
+                     th:pokedef="${pokemon.def}"
+                     th:pokedefesp="${pokemon.def_esp}"
+                     th:poketipo="${pokemon.tipo}"
+                     th:pokevel="${pokemon.vel}"
+                     class="pokefondo">
+                </div>
+            </div>
+            <div class="face back">
+				
+				<div class="health-bar">
+								<div class="bar" th:style="'width: ' + ${pokemon.hp} + '%;'"></div>
+								</div>
+								<p id="pokeinfo"></p>
+			
+			<div class="atk-bar">
+				<div class="bar" th:style="'width: ' + ${pokemon.atk} + '%;'"></div>
+				</div>
+				<p id="pokeatk"></p>
+				
+			<div class="atkesp-bar">
+				<div class="bar" th:style="'width: ' + ${pokemon.atk_esp} + '%;'"></div>
+				</div>
+				<p id="pokeatk_esp"></p>
+								
+
+				<div class="def-bar">
+				<div class="bar" th:style="'width: ' + ${pokemon.def} + '%;'"></div>
+				</div>
+				<p id="pokedef"></p>
+
+				<div class="defesp-bar">
+				<div class="bar" th:style="'width: ' + ${pokemon.def_esp} + '%;'"></div>
+				</div>
+				<p id="pokedef_esp"></p>		
+				
+
+				<div class="vel-bar">
+				<div class="bar" th:style="'width: ' + ${pokemon.vel} + '%;'"></div>
+				</div>
+				<p id="pokevel"></p>				
+			
+				<img th:src="@{'/imgs/sprites/'+ ${pokemon.num_pokedex} + '.gif'}" loading="lazy" class="gifs">	
+									
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var cards = document.querySelectorAll(".card");
+            cards.forEach(function(card) {
+                var front = card.querySelector(".front");
+                var back = card.querySelector(".back");
+                var pokemonName = front.querySelector(".pokefondo").getAttribute('pokename');
+                var pokemonHP = front.querySelector(".pokefondo").getAttribute('pokehp');
+                var pokeAtk = front.querySelector(".pokefondo").getAttribute('pokeatk');
+                var pokeAtkesp = front.querySelector(".pokefondo").getAttribute('pokeatkesp');
+                var pokedef = front.querySelector(".pokefondo").getAttribute('pokedef');
+                var pokedefesp = front.querySelector(".pokefondo").getAttribute('pokedefesp');
+                var poketipo = front.querySelector(".pokefondo").getAttribute('poketipo');
+                var pokevel = front.querySelector(".pokefondo").getAttribute('pokevel');
+                var pokemonSpriteSrc = front.querySelector("img").getAttribute('src');
+
+                var pokeinfo ="HP:" + pokemonHP;
+                back.querySelector("#pokeinfo").innerText = pokeinfo;
+				var pokeatk="ATK: " + pokeAtk;
+				back.querySelector("#pokeatk").innerText=pokeatk;
+				var pokeatk_esp="ATK_ESP: "+ pokeAtkesp;
+				back.querySelector("#pokeatk_esp").innerText=pokeatk_esp;
+         		var pokedef="DEF: "+ pokedef;
+				back.querySelector("#pokedef").innerText=pokedef;
+				var pokedef_esp="DEF_ESP: "+ pokedefesp;
+				back.querySelector("#pokedef_esp").innerText=pokedef_esp;
+				var pokevel="VEL: "+ pokevel;
+			    back.querySelector("#pokevel").innerText=pokevel;
+			   });
+        });
+    </script>
+</body>
+</html>
