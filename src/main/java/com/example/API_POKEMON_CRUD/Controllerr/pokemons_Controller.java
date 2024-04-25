@@ -50,9 +50,7 @@ public class pokemons_Controller {
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<pokemons> showPokemons(@RequestParam String username) {
-		
-		List<pokemons> caughtPokemons = servicio.allpokemons();      
-		return caughtPokemons;		
+		return servicio.allpokemons();
 	}
 
 	@GetMapping("/logout")
